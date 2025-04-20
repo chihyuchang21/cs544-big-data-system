@@ -7,6 +7,7 @@ In this section, I document the process of setting up a Google Cloud Platform (G
 > **Note**: The CS544 course provides a preconfigured DoIT VM environment for enrolled students.  
 > Since I am not officially enrolled in the course, I created my own virtual environment using GCP instead.
 
+
 ### Steps:
 
 #### 1. Create the VM on GCP
@@ -20,3 +21,6 @@ In this section, I document the process of setting up a Google Cloud Platform (G
 #### 3. Generate SSH key locally
 ```bash
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+
+> **Reflection**: In the past, I’ve worked with AWS cloud services, so I’m already familiar with the general process of provisioning virtual machines, setting up SSH access, and working in a cloud-based development environment.I found interesting is that on GCP, the process of adding a public key to the instance metadata was slightly different compared to AWS's use of pre-defined `.pem` key files. With GCP, I generated the SSH key pair manually using `ssh-keygen` and pasted the public key into the VM settings.
