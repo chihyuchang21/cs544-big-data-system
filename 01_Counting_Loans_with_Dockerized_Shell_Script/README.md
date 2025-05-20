@@ -4,8 +4,11 @@
 
 In this section, I document the process of setting up a Google Cloud Platform (GCP) Virtual Machine (VM), reserving a static IP (Elastic IP), and connecting to the instance using SSH via key-based authentication.
 
-> **Note**: The CS544 course provides a preconfigured DoIT VM environment for enrolled students.  
-> Since I am not officially enrolled in the course, I created my own virtual environment using GCP instead.
+> **Note**:  
+> 1. The CS544 course provides a preconfigured DoIT VM environment for enrolled students.  
+>    Since I am not officially enrolled in the course, I created my own virtual environment using GCP instead.  
+> 2. I have configured a shortcut called `cs544-server` in my `~/.ssh/config` file to connect to the server.  
+>    I use **Git Bash** to run **`ssh cs544-server`** for quick access, since Git Bash includes a built-in SSH client—unlike PowerShell, which tends to be less stable in this context.
 
 
 ### Steps:
@@ -98,3 +101,67 @@ git push -f origin clean-main:main
 
 
 > **Reflection**: In the past, I’ve worked with AWS cloud services, so I’m already familiar with the general process of provisioning virtual machines, setting up SSH access, and working in a cloud-based development environment. I found interesting is that on GCP, the process of adding a public key to the instance metadata was slightly different compared to AWS’s use of pre-defined .pem key files. With GCP, I generated the SSH key pair manually using ssh-keygen and pasted the public key into the VM settings.
+
+
+## Part 1 & 2: Download Script & Multi Script
+> download.sh
+```bash
+#!/bin/bash
+
+# Download the files
+wget https://pages.cs.wisc.edu/~harter/cs544/data/wi2021.csv.gz
+wget https://pages.cs.wisc.edu/~harter/cs544/data/wi2022.csv.gz
+wget https://pages.cs.wisc.edu/~harter/cs544/data/wi2023.csv.gz
+
+# Decompress the files
+gunzip wi2021.csv.gz
+gunzip wi2022.csv.gz
+gunzip wi2023.csv.gz
+
+# Concatenate the files into wi.txt
+cat wi2021.csv wi2022.csv wi2023.csv > wi.txt
+```
+
+> multi.sh
+```bash
+#!/bin/bash
+
+# Step 1: Run download.sh to get wi.txt
+./download.sh
+
+# Step 2: Count lines with "Multifamily" (case-insensitive)
+count=$(grep -i "Multifamily" wi.txt | wc -l)
+
+# Step 3: Print the result
+echo "Number of lines containing 'Multifamily': $count"
+```
+
+## Part 3: Docker Install
+
+#### 1. Install Docker ([official doc](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository))
+
+I tried to install the specific version as course instruction mentioned but it failed, so I just use the latest version.
+
+#### 2. Manage Docker as a non-root user ([official doc](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user))
+
+Then user doesn't need to specify "sudo" everytime to use docker commands.
+
+
+
+## Part 4: Docker Image
+```bash
+#!/bin/bash
+
+# vim Dockerfile
+FROM ubuntu:latest
+
+COPY multi.sh /multi.sh
+RUN chmod +x /multi.sh
+CMD ["/multi.sh"]
+```
+
+```bash
+docker build . -t p1
+docker run p1
+```
+
