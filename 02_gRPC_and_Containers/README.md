@@ -1,45 +1,25 @@
-# P2 (4% of grade): gRPC and Containers
+# P2 Solution Notes: gRPC and Containers
 
-## Overview
+> **Config Notes**: 
+> TBD
 
-In this project, you'll create a multi-container application for
-looking up the addresses of houses in Madison with a given zipcode.
-One set of containers will host the data and provide access via gRPC.
-Their functionality is identical so that your application can continue
-to operate even if one container fails.  Another set of containers
-will provide an HTTP interface to the data.  This second set won't
-actually store the original data, but will communicate with the first
-set of containers to get the data necessary to answer queries.  The
-second set of containers will have built-in LRU caches to reduce load
-on the storage containers.
+> **Git Troubleshooting Notes**:
+> I encountered this issue after pushing a commit from my local machine.  
+> On the GCP VM, `git status` showed "main branch is up to date with 'origin/main'", but the new file was missing.  
 
-Learning objectives:
-* communicate via gRPC
-* tolerate failures with replication and retries
-* implement an LRU cache
-
-Before starting, please review the [general project directions](../projects.md).
-
-## Corrections/Clarifications
-
-### Update (Feb 11, 2024)
-
-Be sure that your installed `autobadger` is on version `0.1.3`. You can print the version using
-
-```bash
-autobadger --info
-```
-
-See [projects.md](https://git.doit.wisc.edu/cdis/cs/courses/cs544/s25/main/-/blob/main/projects.md#testing) for more information.
+> - *Git Status vs Remote*  
+>   `git status` only checks your local branch against the locally cached `origin/main`. It does not contact the remote server unless you run `git fetch`.
+>
+> - *No Auto Fetch by Design*  
+>   Git avoids auto-fetching to ensure performance, predictability, and user control. Network operations are explicit by default.
+>
+> - *Work Practice*  
+>   In most workplaces, developers fetch manually or rely on CI pipelines. Auto-fetch is rarely enabled.
+>
+> - *Recommended Command*  
+>   Run `git fetch` before `git status` if you want to check for remote updates.
 
 
-### Update (Feb 20, 2024)
-
-We updated `autobadger` to better handle load balancing for Q5 and make it less prone to breakage.
-
-It also was improved some of the error messaging surfaced back to the user.
-
-Be sure that your installed `autobadger` is on version `0.1.4`.
 
 
 ## Introduction
@@ -191,14 +171,3 @@ docker compose up -d
 We will copy in the "docker-compose.yml" and "addresses.csv.gz" files,
 overwriting anything you might have changed.
 
-## Tester
-
-Use the **autobadger** tool on your machine to run tests against your code:
-
-```bash
-autobadger --project=p2 --verbose
-```
-
-The `--verbose` flag will print more information to the console as your tests are running.
-
-Pushing to `main` will submit your project and we will grade your code on `main` from a remote VM. A GitLab issue should be pushed to your repository shortly after you submit.

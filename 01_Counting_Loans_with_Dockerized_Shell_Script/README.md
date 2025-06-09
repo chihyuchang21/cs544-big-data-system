@@ -4,7 +4,7 @@
 
 In this section, I document the process of setting up a Google Cloud Platform (GCP) Virtual Machine (VM), reserving a static IP (Elastic IP), and connecting to the instance using SSH via key-based authentication.
 
-> **Note**:  
+> **Config Notes**:  
 > - *Environment*  
 >   I am not officially enrolled in CS544, so I created my own virtual environment using Google Cloud Platform (GCP) instead of using the preconfigured DoIT VM.
 >
