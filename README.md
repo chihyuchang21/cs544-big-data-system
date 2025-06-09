@@ -51,7 +51,7 @@ Throughout the semester, the following projects were completed:
 
 ## Instructor
 Prof. Tyler Caraza-Harter  
-[CS544 Course Website](https://tyler.caraza-harter.com/cs544/)
+[CS544 Course Website](https://tyler.caraza-harter.com/cs544/s25/schedule.html)
 
 ---
 ## Copyright & Source Attribution

@@ -5,10 +5,17 @@
 In this section, I document the process of setting up a Google Cloud Platform (GCP) Virtual Machine (VM), reserving a static IP (Elastic IP), and connecting to the instance using SSH via key-based authentication.
 
 > **Note**:  
-> 1. The CS544 course provides a preconfigured DoIT VM environment for enrolled students.  
->    Since I am not officially enrolled in the course, I created my own virtual environment using GCP instead.  
-> 2. I have configured a shortcut called `cs544-server` in my `~/.ssh/config` file to connect to the server.  
->    I use **Git Bash** to run **`ssh cs544-server`** for quick access, since Git Bash includes a built-in SSH client—unlike PowerShell, which tends to be less stable in this context.
+> - *Environment*  
+>   I am not officially enrolled in CS544, so I created my own virtual environment using Google Cloud Platform (GCP) instead of using the preconfigured DoIT VM.
+>
+> - *SSH Access*  
+>   I configured a shortcut named `cs544-server` in my `~/.ssh/config` file for quick login. I use `ssh cs544-server` to connect.
+>
+> - *Network Access*  
+>   The GCP VM is protected by firewall rules (VPC ingress settings), allowing SSH only from the UW–Madison network. Therefore, I must connect to the university's VPN via *GlobalProtect* before using SSH.
+>
+> - *Terminal Choice*  
+>   I use *Git Bash* instead of Git CMD or PowerShell, because it includes a built-in SSH client and offers a more stable, Unix-like interface on Windows.
 
 
 ### Steps:
